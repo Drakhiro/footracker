@@ -6,7 +6,7 @@ Ce fichier définit diverses fonctions permettant de faciliter la production de 
 tableaux, formulaires, ...
 */
 // Exemple d'appel :  mkLigneEntete($data,array('pseudo', 'couleur', 'connecte'));
-function mkLigneEntete($tabAsso,$listeChamps=false)
+function mkLigneEntete($tabAsso, $listeChamps = false)
 {
 	// Fonction appelée dans mkTable, produit une ligne d'entête
 	// contenant les noms des champs à afficher dans mkTable
@@ -17,24 +17,21 @@ function mkLigneEntete($tabAsso,$listeChamps=false)
 	{
 		// tabAsso est un tableau associatif dont on affiche TOUTES LES CLES
 		echo "\t<tr>\n";
-		foreach ($tabAsso as $cle => $val)	
-		{
+		foreach ($tabAsso as $cle => $val) {
 			echo "\t\t<th>$cle</th>\n";
 		}
 		echo "\t</tr>\n";
-	}
-	else		// Les noms des champs sont dans $listeChamps 	
+	} else		// Les noms des champs sont dans $listeChamps 	
 	{
 		echo "\t<tr>\n";
-		foreach ($listeChamps as $nomChamp)	
-		{
+		foreach ($listeChamps as $nomChamp) {
 			echo "\t\t<th>$nomChamp</th>\n";
 		}
 		echo "\t</tr>\n";
 	}
 }
 
-function mkLigne($tabAsso,$listeChamps=false)
+function mkLigne($tabAsso, $listeChamps = false)
 {
 	// Fonction appelée dans mkTable, produit une ligne 	
 	// contenant les valeurs des champs à afficher dans mkTable
@@ -45,17 +42,14 @@ function mkLigne($tabAsso,$listeChamps=false)
 	{
 		// tabAsso est un tableau associatif
 		echo "\t<tr>\n";
-		foreach ($tabAsso as $cle => $val)	
-		{
+		foreach ($tabAsso as $cle => $val) {
 			echo "\t\t<td>$val</td>\n";
 		}
 		echo "\t</tr>\n";
-	}
-	else	// les champs à afficher sont dans $listeChamps
+	} else	// les champs à afficher sont dans $listeChamps
 	{
 		echo "\t<tr>\n";
-		foreach ($listeChamps as $nomChamp)	
-		{
+		foreach ($listeChamps as $nomChamp) {
 			echo "\t\t<td>$tabAsso[$nomChamp]</td>\n";
 		}
 		echo "\t</tr>\n";
@@ -63,7 +57,7 @@ function mkLigne($tabAsso,$listeChamps=false)
 }
 
 // Exemple d'appel :  mkTable($users,array('pseudo', 'couleur', 'connecte'));	
-function mkTable($tabData,$listeChamps=false)
+function mkTable($tabData, $listeChamps = false)
 {
 
 	// Attention : le tableau peut etre vide 
@@ -72,13 +66,12 @@ function mkTable($tabData,$listeChamps=false)
 
 	echo "<table border=\"1\">\n";
 	// afficher une ligne d'entete avec le nom des champs
-	mkLigneEntete($tabData[0],$listeChamps);
+	mkLigneEntete($tabData[0], $listeChamps);
 
 	//tabData est un tableau indicé par des entier
-	foreach ($tabData as $data)	
-	{
+	foreach ($tabData as $data) {
 		// afficher une ligne de données avec les valeurs, à chaque itération
-		mkLigne($data,$listeChamps);
+		mkLigne($data, $listeChamps);
 	}
 	echo "</table>\n";
 
@@ -86,7 +79,7 @@ function mkTable($tabData,$listeChamps=false)
 	// Si listeChamps est vide, on affiche toutes les données de $tabData
 	// S'il est défini, on affiche uniquement les champs listés dans ce tableau, 
 	// dans l'ordre du tableau
-	
+
 }
 
 // Produit un menu déroulant portant l'attribut name = $nomChampSelect
@@ -103,21 +96,20 @@ function mkTable($tabData,$listeChamps=false)
 // mkSelect("idUser",$users,"id","pseudo");
 // TESTER AVEC mkSelect("idUser",$users,"id","pseudo",2,"couleur");
 
-function mkSelect($nomChampSelect, $tabData,$champValue, $champLabel,$selected=false,$champLabel2=false)
+function mkSelect($nomChampSelect, $tabData, $champValue, $champLabel, $selected = false, $champLabel2 = false)
 {
 
-	$multiple=""; 
-	if (preg_match('/.*\[\]$/',$nomChampSelect)) $multiple =" multiple =\"multiple\" ";
+	$multiple = "";
+	if (preg_match('/.*\[\]$/', $nomChampSelect)) $multiple = " multiple =\"multiple\" ";
 
 	echo "<select $multiple name=\"$nomChampSelect\">\n";
-	foreach ($tabData as $data)
-	{
+	foreach ($tabData as $data) {
 		$sel = "";	// par défaut, aucune option n'est préselectionnée 
 		// MAIS SI le champ selected est fourni
 		// on teste s'il est égal à l'identifiant de l'élément en cours d'affichage
 		// cet identifiant est celui qui est affiché dans le champ value des options
 		// i.e. $data[$champValue]
-		if ( ($selected) && ($selected == $data[$champValue]) )
+		if (($selected) && ($selected == $data[$champValue]))
 			$sel = "selected=\"selected\"";
 
 		echo "<option $sel value=\"$data[$champValue]\">\n";
@@ -129,10 +121,10 @@ function mkSelect($nomChampSelect, $tabData,$champValue, $champLabel,$selected=f
 	echo "</select>\n";
 }
 
-function mkForm($action="",$method="get")
+function mkForm($action = "", $method = "get", $attrs="")
 {
 	// Produit une balise de formulaire NB : penser à la balise fermante !!
-	echo "<form action=\"$action\" method=\"$method\" >\n";
+	echo "<form $attrs action=\"$action\" method=\"$method\" >\n";
 }
 function endForm()
 {
@@ -140,33 +132,38 @@ function endForm()
 	echo "</form>\n";
 }
 
-function mkInput($type,$name,$value="",$attrs="")
+/**Produit un label */
+function mkLabel($for, $label, $attrs="") {
+	echo "<label $attrs for=\"" . $for . "\">" . $label . "</label>";
+}
+
+function mkInput($type, $name, $value = "", $attrs = "")
 {
 	// Produit un champ formulaire
 	echo "<input $attrs type=\"$type\" name=\"$name\" value=\"$value\"/>\n";
 }
 
-function mkRadioCb($type,$name,$value,$checked=false)
+function mkRadioCb($type, $name, $value, $checked = false, $attrs="")
 {
 	// Produit un champ formulaire de type radio ou checkbox
 	// Et sélectionne cet élément si le quatrième argument est vrai
-	$selectionne = "";	
-	if ($checked) 
+	$selectionne = "";
+	if ($checked)
 		$selectionne = "checked=\"checked\"";
-	echo "<input type=\"$type\" name=\"$name\" value=\"$value\"  $selectionne />\n";
+	echo "<input $attrs type=\"$type\" name=\"$name\" value=\"$value\"  $selectionne />\n";
 }
 
-function mkLien($url,$label, $qs="",$attrs="")
+function mkLien($url, $label, $qs = "", $attrs = "")
 {
 	echo "<a $attrs href=\"$url?$qs\">$label</a>\n";
 }
 
-function mkLiens($tabData,$champLabel, $champCible, $urlBase=false, $nomCible="")
+function mkLiens($tabData, $champLabel, $champCible, $urlBase = false, $nomCible = "")
 {
 	// produit une liste de liens (plus facile à styliser)
 	// A partir de données fournies dans un tableau associatif	
 	// Chaque lien pointe vers une url définie par le champ $champCible
-	
+
 	// SI urlBase n'est pas false, on utilise  l'url de base 
 	// (avec son point d'interrogation) à laquelle on ajoute le champ cible 
 	// dans la chaîne de requête, associé au paramètre $nomCible, après un '&' 
@@ -179,22 +176,21 @@ function mkLiens($tabData,$champLabel, $champCible, $urlBase=false, $nomCible=""
 	// produira <a href="index.php?view=chat&idConv=1">Multimédia</a> ...
 
 	if (!$urlBase) {
-		foreach($tabData as $data) {			
+		foreach ($tabData as $data) {
 			echo '<a href="';
 			echo $data[$champCible];
 			echo '">';
 			echo $data[$champLabel];
 			echo "</a>\n<br />\n";
 		}
-	}
-	else {
+	} else {
 		// parcourir les données de tabData 
-		foreach($tabData as $data) {
+		foreach ($tabData as $data) {
 			// on parcourt uniquement les valeurs
 			// a chaque itération, les valeurs sont dans 
 			// le tableau $data
 			echo '<a href="';
-			echo $urlBase . "&" . $nomCible . "=" ;
+			echo $urlBase . "&" . $nomCible . "=";
 			echo $data[$champCible];
 			echo '">';
 			echo $data[$champLabel];
@@ -202,21 +198,3 @@ function mkLiens($tabData,$champLabel, $champCible, $urlBase=false, $nomCible=""
 		}
 	}
 }
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

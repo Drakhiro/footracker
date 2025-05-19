@@ -32,7 +32,7 @@ CREATE TABLE `areas` (
   `nom` varchar(255) DEFAULT NULL,
   `code` varchar(10) DEFAULT NULL,
   `drapeau_url` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -45,7 +45,7 @@ CREATE TABLE `classements` (
   `season` int DEFAULT NULL,
   `competition_id` int DEFAULT NULL,
   `area_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,7 @@ CREATE TABLE `clubs` (
   `fondation` int DEFAULT NULL,
   `coach_id` int DEFAULT NULL,
   `area_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -75,7 +75,7 @@ CREATE TABLE `coachs` (
   `nom` varchar(255) DEFAULT NULL,
   `date_naissance` varchar(50) DEFAULT NULL,
   `nationalite` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE `competitions` (
   `type` varchar(50) DEFAULT NULL,
   `url_emblem` varchar(255) DEFAULT NULL,
   `area_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `experiences` (
   `match_id` int DEFAULT NULL,
   `note` int DEFAULT NULL,
   `description` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE `experiences` (
 CREATE TABLE `favoris` (
   `user_id` int NOT NULL,
   `club_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -130,7 +130,7 @@ CREATE TABLE `joueurs` (
   `date_naissance` varchar(50) DEFAULT NULL,
   `nationalite` varchar(100) DEFAULT NULL,
   `club_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE `matches` (
   `mitemps_score_id` int DEFAULT NULL,
   `final_score_id` int DEFAULT NULL,
   `winner` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -173,7 +173,7 @@ CREATE TABLE `placements` (
   `butsMarques` int DEFAULT NULL,
   `butsEncaisses` int DEFAULT NULL,
   `butsDifference` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,7 @@ CREATE TABLE `scores` (
   `id` int NOT NULL,
   `domicile` int DEFAULT NULL,
   `exterieur` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -196,7 +196,7 @@ CREATE TABLE `scores` (
 CREATE TABLE `stades` (
   `id` int NOT NULL,
   `nom` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 -- --------------------------------------------------------
 
@@ -209,7 +209,7 @@ CREATE TABLE `users` (
   `mail` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+)  ;
 
 --
 -- Déchargement des données de la table `users`

@@ -10,7 +10,7 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 include_once "libs/maLibUtils.php";
 
 // on récupère le paramètre view éventuel 
-$view = valcacaider("view");
+$view = valider("view");
 
 // S'il est vide, on charge la vue accueil par défaut
 if (!$view) $view = "accueil";

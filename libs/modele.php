@@ -42,7 +42,7 @@ function verifUserBdd($login,$password)
 	// renvoie faux si user inconnu
 	// renvoie l'id de l'utilisateur si succès
 
-	$SQL="SELECT ID FROM User WHERE Username='$login' AND Password='$password'";
+	$SQL="SELECT `id` FROM users WHERE `username`='$login' AND `password`='$password'";
 
 	return SQLGetChamp($SQL);
 }

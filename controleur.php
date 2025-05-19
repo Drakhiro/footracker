@@ -7,7 +7,7 @@ include_once "libs/maLibSecurisation.php";
 include_once "libs/modele.php";
 
 $qs = "";
-$dataQS = array(); 
+$dataQS = array();
 
 if ($action = valider("action")) {
 	ob_start();
@@ -20,29 +20,27 @@ if ($action = valider("action")) {
 		// Sauf si on veut se connecter (action == Connexion)
 		*/
 
-	if ($action != "Connexion")
+	if ($action != "Se connecter")
 		securiser("login");
 
 	// Un paramètre action a été soumis, on fait le boulot...
 	switch ($action) {
 
 		// Connexion //////////////////////////////////////////////////
-		case 'Connexion':
-			// On verifie la presence des champs login et passe
-			if ($login = valider("login"))
-				if ($passe = valider("passe")) {
+		case 'Se connecter':
+			// On verifie la presence des champs identifiant et mdp
+			if ($identifiant = valider("identifiant"))
+				if ($mdp = valider("mdp")) {
 					// On verifie l'utilisateur, 
 					// et on crée des variables de session si tout est OK
 					// Cf. maLibSecurisation
-					if (verifUser($login, $passe)) {
+					if (verifUser($identifiant, $mdp)) {
 						// tout s'est bien passé, doit-on se souvenir de la personne ? 
 						if (valider("remember")) {
-							setcookie("login", $login, time() + 60 * 60 * 24 * 30);
-							setcookie("passe", $password, time() + 60 * 60 * 24 * 30);
+							setcookie("identifiant", $identifiant, time() + 60 * 60 * 24 * 30);
 							setcookie("remember", true, time() + 60 * 60 * 24 * 30);
 						} else {
-							setcookie("login", "", time() - 3600);
-							setcookie("passe", "", time() - 3600);
+							setcookie("identifiant", "", time() - 3600);
 							setcookie("remember", false, time() - 3600);
 						}
 					}

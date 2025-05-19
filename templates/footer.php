@@ -29,7 +29,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 // echo $response;
 tprint($_SESSION);
-if (valider("connected")) {
+if (valider("connected", "SESSION")) {
 	echo "<a href=\"controleur.php?action=Logout\">Se Déconnecter</a>";
 }
 ?>

@@ -1,3 +1,5 @@
 .env
 libs/config.php
 .vscode
+*.sh
+.json

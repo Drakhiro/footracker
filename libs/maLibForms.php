@@ -198,3 +198,10 @@ function mkLiens($tabData, $champLabel, $champCible, $urlBase = false, $nomCible
 		}
 	}
 }
+
+function mkInfoMsg($text, $color, $class="") {
+	echo "<div class=\"flex flex-row gap-2 justify-center items-center text-$color-600 $class\">";
+    echo "   <ion-icon name=\"information-circle-sharp\"></ion-icon>";
+    echo "   <h2 class=\"text-lg\">$text</h2>";
+    echo "</div>";
+}

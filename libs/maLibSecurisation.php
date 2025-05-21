@@ -14,21 +14,19 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
  * Infos à enregistrer : pseudo, idUser, heureConnexion, isAdmin
  * Elle enregistre l'état de la connexion dans une variable de session "connecte" = true
  * @pre login et passe ne doivent pas être vides
- * @param string $login
+ * @param string $identifiant
  * @param string $password
  * @return false ou true ; un effet de bord est la création de variables de session
  */
-function verifUser($login, $password)
-{
-
-	$id = verifUserBdd($login, $password);
+function verifUser($identifiant, $password) {
+	$id = verifUserBdd($identifiant, $password);
 
 	if (!$id) return false;
 
 	// Cas succès : on enregistre pseudo, idUser dans les variables de session 
 	// il faut appeler session_start ! 
 	// Le controleur le fait déjà !!
-	$_SESSION["pseudo"] = $login;
+	$_SESSION["identifiant"] = $identifiant;
 	$_SESSION["idUser"] = $id;
 	$_SESSION["connected"] = true;
 	$_SESSION["heureConnexion"] = date("H:i:s");

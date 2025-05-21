@@ -10,20 +10,31 @@ include_once("libs/modele.php");
 include_once("libs/maLibUtils.php");
 include_once("libs/maLibForms.php");
 
-// Chargement eventuel des données en cookies
-$identifiant = valider("identifiant", "COOKIE");
-if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
+if (valider("connected", "SESSION")) {
+	include("templates/accueil.php"); 
+} else {
+	// Chargement eventuel des données en cookies
+	$identifiant = valider("identifiant", "COOKIE");
+	if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 ?>
 
 <div class="flex flex-col gap-8 items-center justify-center h-[80vh]">
+	<?php 
+        if ($error = valider("error")) {
+            mkInfoMsg($error, "red");
+        }
+		if ($succes = valider("succes")) {
+			mkInfoMsg($succes, "green");
+		}
+    ?>
 	<h1 class="text-5xl font-bold">Se connecter</h1>
 	<h2 class="text-xl text-custom-grey">Bon retour parmis nous !</h2>
 
 	<form action="controleur.php" class="flex flex-col items-center justify-center gap-4">
 
-		<label for="identifiant" class="flex flex-col gap-1">
+		<label for="identifiant" class="group flex flex-col gap-1 focus-within:text-custom-primary">
 			<p>Identifiant</p>
-			<div class="group flex flex-row items-center gap-4 bg-custom-black p-2 border-solid border-custom-grey border-[2px] rounded-[8px] focus-within:border-custom-primary focus-within:text-custom-primary">
+			<div class="flex flex-row items-center px-4 py-2 gap-4 bg-custom-black border-solid border-custom-grey border-[2px] rounded-[8px] group-focus-within:border-custom-primary">
 				<ion-icon name="person-outline"></ion-icon>
 				<input 
 					type="text" 
@@ -36,9 +47,9 @@ if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 			</div>
 		</label>
 
-		<label for="mdp" class="flex flex-col gap-1 mt-8">
+		<label for="mdp" class="group flex flex-col gap-1 mt-6 focus-within:text-custom-primary">
 			<p>Mot de passe</p>
-			<div class="group flex flex-row items-center gap-4 bg-custom-black p-2 border-solid border-custom-grey border-[2px] rounded-[8px] focus-within:border-custom-primary focus-within:text-custom-primary">
+			<div class="flex flex-row items-center px-4 py-2 gap-4 bg-custom-black border-solid border-custom-grey border-[2px] rounded-[8px] group-focus-within:border-custom-primary">
 				<ion-icon name="lock-closed-outline"></ion-icon>
 				<input 
 					type="password" 
@@ -46,11 +57,11 @@ if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 					id="mdp" 
 					class="appearance-none bg-transparent border-none outline-none shadow-none ring-0 focus:ring-0 focus:outline-none min-h-[32px]"
 				>
-				<ion-icon name="eye-off-outline"></ion-icon>
+				<ion-icon name="eye-off-outline" class="cursor-pointer"></ion-icon>
 			</div>
 		</label>
 
-		<label for="remember" class="flex flex-row">
+		<label for="remember" class="flex flex-row gap-4">
 			<p>Se souvenir de moi</p>
 			<input type="checkbox" name="remember" id="remember" value="ok" <?php echo $checked;?> >
 		</label>
@@ -59,3 +70,5 @@ if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 
 	</form>
 </div>
+
+<?php } ?>

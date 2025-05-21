@@ -20,7 +20,7 @@ if ($action = valider("action")) {
 		// Sauf si on veut se connecter (action == Connexion)
 		*/
 
-	if ($action != "Se connecter")
+	if (!($action == "Se connecter" || $action == "Inscription"))
 		securiser("login");
 
 	// Un paramètre action a été soumis, on fait le boulot...
@@ -29,12 +29,11 @@ if ($action = valider("action")) {
 		// Connexion //////////////////////////////////////////////////
 		case 'Se connecter':
 			// On verifie la presence des champs identifiant et mdp
-			if ($identifiant = valider("identifiant"))
+			if ($identifiant = valider("identifiant")) {
 				if ($mdp = valider("mdp")) {
 					// On verifie l'utilisateur, 
 					// et on crée des variables de session si tout est OK
-					// Cf. maLibSecurisation
-					if (verifUser($identifiant, $mdp)) {
+					if (verifUser(addslashes($identifiant), addslashes($mdp))) {
 						// tout s'est bien passé, doit-on se souvenir de la personne ? 
 						if (valider("remember")) {
 							setcookie("identifiant", $identifiant, time() + 60 * 60 * 24 * 30);
@@ -43,8 +42,9 @@ if ($action = valider("action")) {
 							setcookie("identifiant", "", time() - 3600);
 							setcookie("remember", false, time() - 3600);
 						}
-					}
-				}
+					} else $qs = "?view=login&error=" . urlencode("Identifiants invalides !");
+				} else $qs = "?view=login&error=" . urlencode("Entrez un mot de passe !");
+			} else $qs = "?view=login&error=" . urlencode("Entrez un identifiant !");
 
 			// On redirigera vers la page index automatiquement
 			break;
@@ -54,6 +54,31 @@ if ($action = valider("action")) {
 			// traitement métier
 			session_destroy(); // 1) traitement 
 			$qs = "?view=accueil";
+			break;
+
+		case 'Inscription':
+			function setQsError($text, $pseudo, $mail) {
+				$qs = "?view=signup&error=" . $text . "&pseudo=" . $pseudo . "&mail=" . $mail;
+				return $qs;
+			}
+
+			$pseudo = valider("pseudonyme");
+			$mail = valider("mail");
+
+			if ($pseudo) {
+				if ($mail) {
+					if (strlen($mdp = valider("mdp")) >= 8) {
+						if (!existInBdd(addslashes($pseudo), "username")) {
+							if (!existInBdd(addslashes($mail), "mail")) {
+								createUser(addslashes($pseudo), addslashes($mail), addslashes($mdp));
+								$qs = "?view=login&succes=" . urlencode("Compte $pseudo créé avec succès !");
+							} else {
+								$qs = setQsError(urlencode("Ce mail existe déjà !"), urlencode($pseudo), "");
+							}
+						} else $qs = setQsError(urlencode("Ce pseudonyme existe déjà !"), "", urlencode($mail));
+					} else $qs = setQsError(urlencode("Entrez un mot de passe contenant au moins 8 caractères !"), urlencode($pseudo), urlencode($mail));
+				} else $qs = setQsError(urlencode("Entrez un e-mail !"), urlencode($pseudo), urlencode($mail));
+			} else $qs = setQsError(urlencode("Entrez un pseudonyme !"), urlencode($pseudo), urlencode($mail));
 			break;
 	}
 }
